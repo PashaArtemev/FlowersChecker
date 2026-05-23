@@ -92,7 +92,6 @@ if __name__ == '__main__':
     val_loader   = DataLoader(val_dataset, batch_size=64, shuffle=False, num_workers=4)
 
     # Модель: предобученная ResNet-18
-    # Используем современный синтаксис, чтобы убрать предупреждение warnings.warn
     model = models.resnet18(weights=models.ResNet18_Weights.DEFAULT)
 
     # Адаптация последнего слоя под количество классов
