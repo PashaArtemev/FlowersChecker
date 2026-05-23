@@ -156,7 +156,7 @@ if __name__ == '__main__':
         running_loss = 0.0  # Суммарная потеря за эпоху
         total = 0  # Общее количество обработанных образцов
         correct = 0  # Количество правильно классифицированных образцов
-        print(f"\n--- Epoch {epoch+1}/{epochs} start ---")  # Вывод информации о начале эпохи
+        print(f"\n--- Эпоха {epoch+1}/{epochs} начало ---")  # Вывод информации о начале эпохи
 
         for images, labels in train_loader:  # Цикл по батчам обучающей выборки
             images = images.to(device)  # Перемещаем изображения на устройство
@@ -216,5 +216,5 @@ if __name__ == '__main__':
             # Сохраняем веса модели в файл
             torch.save(model.state_dict(), best_model_path) 
 
-    print(f"\nBest validation accuracy: {best_val_acc:.4f}")
-    print(f"Saved best model to {best_model_path}")
+    print(f"\nЛучшая точность: {best_val_acc:.4f}")
+    print(f"Сохранил лучшую модель тут: {best_model_path}")
