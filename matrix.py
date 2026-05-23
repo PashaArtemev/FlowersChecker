@@ -9,12 +9,9 @@ from torchvision import datasets, models
 # --- 1. Настройка и загрузка модели ---
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-# Путь к вашей модели
 model_path = "flower_restNet.pth"
 
-
-# Загружаем архитектуру ResNet-18
-model = models.resnet18(weights=None)  # Используем None, так как загружаем свои веса
+model = models.resnet18(weights=None) 
 
 # Адаптируем последний слой под 5 классов (daisy, dandelion, rose, sunflower, tulip)
 num_classes = 5
@@ -23,23 +20,19 @@ model.fc = torch.nn.Linear(model.fc.in_features, num_classes)
 # Загружаем сохранённые веса
 model.load_state_dict(torch.load(model_path, map_location=device))
 model.to(device)
-model.eval()  # Переключаем в режим вывода
+model.eval()  
 
 # --- 2. Настройка датасета (валидация) ---
-# ВАЖНО: убедитесь, что transform совпадает с тем, что вы использовали при обучении
 transform = transforms.Compose([
     transforms.Resize((224, 224)),
     transforms.ToTensor(),
     transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
 ])
 
-# Замените путь на путь к вашей папке с валидационными изображениями
 val_dataset = datasets.ImageFolder(root=os.path.join(os.path.dirname(os.path.abspath(__file__)), "flowers"), transform=transform)
 val_loader = torch.utils.data.DataLoader(val_dataset, batch_size=32, shuffle=False)
 
-# Список классов (замените на ваши названия)
-classes = ['daisy', 'dandelion', 'rose', 'sunflower', 'tulip']  # <-- Ваши классы
-
+classes = ['daisy', 'dandelion', 'rose', 'sunflower', 'tulip']  
 
 # --- 3. Сбор меток ---
 true_labels = []
